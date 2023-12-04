@@ -36,6 +36,8 @@ yarn-error.log*
 next-env.d.ts
 
 # IDE
-/.idea
-/.vscode
-/.vs
+.idea
+.vscode
+*.sublime-project
+*.sublime-workspace
+.vs
