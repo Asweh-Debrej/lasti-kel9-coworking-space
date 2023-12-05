@@ -11,4 +11,4 @@ ARG APP_PORT
 ARG NODE_ENV
 EXPOSE $APP_PORT
 
-RUN if [ "$NODE_ENV" = "production" ]; then npm run build; else npm run dev; fi
+CMD if [ $NODE_ENV = "production" ]; then npm run build; else npm run dev; fi
