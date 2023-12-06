@@ -4,9 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node src/app.js",
-    "dev": "nodemon -L src/app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node --no-deprecation src/app.js",
+    "dev": "nodemon --no-deprecation -L src/app.js"
   },
   "author": "",
   "license": "ISC",
