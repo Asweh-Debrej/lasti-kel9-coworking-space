@@ -1,0 +1,14 @@
+version: "1.0"
+name: "smart-coworking-space-be"
+services:
+  app:
+    container_name: smart-coworking-space-api
+    build:
+      context: .
+      args:
+        - NODE_ENV=${NODE_ENV}
+        - APP_PORT=${APP_PORT}
+    restart: unless-stopped
+    env_file: ./.env
+    ports:
+      - ${APP_PORT}:${APP_PORT}
