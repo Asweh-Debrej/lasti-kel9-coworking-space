@@ -1,6 +1,6 @@
 require('dotenv').config();
 const express = require('express');
-const connectDB = require('./db/mongoose');
+const db = require('./db')
 
 const app = express();
 
@@ -9,15 +9,16 @@ const start = async () => {
 
   try {
     app.use(express.json());
+
     app.use((req, res, next) => {
       console.log(req.path, req.method);
       next();
     });
 
-    await connectDB();
+    await db.connect(process.env.MONGO_URI)
 
-    app.get('/health', (req, res) => {
-      res.send('Server is up and running');
+    app.get('/', (req, res) => {
+      res.send();
     });
 
     app.use("*", (req, res) => {
@@ -27,9 +28,11 @@ const start = async () => {
     app.listen(port, () => {
       console.log(`Server is running on port ${port}`);
     });
+    
   } catch (e) {
     console.log(e);
-    app.get('/health', (req, res) => {
+
+    app.get('/', (req, res) => {
       res.send('Server is down');
     });
   }
