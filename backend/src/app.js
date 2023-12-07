@@ -2,6 +2,8 @@ require('dotenv').config();
 const express = require('express');
 const db = require('./db')
 
+const memberRoutes = require("./routes/member");
+
 const app = express();
 
 const start = async () => {
@@ -21,6 +23,8 @@ const start = async () => {
       res.send();
     });
 
+    app.use("/api", memberRoutes)
+
     app.use("*", (req, res) => {
       res.status(404).send();
     });
@@ -32,9 +36,12 @@ const start = async () => {
   } catch (e) {
     console.log(e);
 
-    app.get('/', (req, res) => {
-      res.send('Server is down');
+    app.listen(port);
+
+    app.get('*', (req, res) => {
+      res.status(503).send();
     });
+
   }
 }
 
