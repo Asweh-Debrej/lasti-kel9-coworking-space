@@ -1,11 +1,11 @@
-FROM node:18-alpine
+FROM node:alpine
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
 COPY package*.json ./
 RUN npm install
 
-COPY . .
+COPY ./src ./src
 
 ARG APP_PORT
 ARG NODE_ENV
