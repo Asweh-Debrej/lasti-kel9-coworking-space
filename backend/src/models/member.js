@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
-var validator = require('validator');
 
-const Member = mongoose.model('Member', {
+const memberSchema = new mongoose.Schema({
     name : {
         type: String,
         trim: true,
@@ -37,6 +36,6 @@ const Member = mongoose.model('Member', {
             message: 'Provided phone number is invalid.'
         }
     },
-});
+},{timestamps: true});
 
-module.exports = {Member};
+module.exports = mongoose.model('Member', memberSchema)
