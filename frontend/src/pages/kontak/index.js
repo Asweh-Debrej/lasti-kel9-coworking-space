@@ -2,6 +2,14 @@ import DefaultLayout from "@layouts/default";
 
 export default function Kontak() {
   return (
-    <DefaultLayout initPage={"kontak"}/>
+    <p>kontak</p>
+  );
+}
+
+Kontak.getLayout = function getLayout(page) {
+  return (
+    <DefaultLayout initPage={"kontak"}>
+      {page}
+    </DefaultLayout>
   );
 }

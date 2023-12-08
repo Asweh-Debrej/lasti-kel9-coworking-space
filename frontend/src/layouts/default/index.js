@@ -5,7 +5,6 @@ import {
   NavbarContent,
   NavbarItem,
   Link,
-  Input,
   DropdownItem,
   DropdownTrigger,
   Dropdown,
@@ -14,21 +13,23 @@ import {
   Button,
 } from "@nextui-org/react";
 import styles from "./layout.module.css";
+import NextLink from "next/link";
 
-export default function NavBar({ children, hasLoggedIn, initPage }) {
+export default function DefaultLayout({ children, hasLoggedIn, initPage }) {
   const router = useRouter();
 
   const currentPage = router.query.slug || initPage;
 
   function LinkNavbarItem({ children, ...props }) {
     return (
-      <NavbarItem isActive={currentPage === props.slug}>
+      <NavbarItem isActive={currentPage === props.id}>
         <Link
-          aria-current={currentPage === props.slug ? "page" : ""}
-          color={currentPage === props.slug ? "secondary" : "foreground"}
+          aria-current={currentPage === props.id ? "page" : ""}
+          color={currentPage === props.id ? "secondary" : "foreground"}
           href={`/${props.slug}`}
           key={props.slug}
-          as="a">
+          id={props.id || props.slug}
+          as={NextLink}>
           {children}
         </Link>
       </NavbarItem>
@@ -40,29 +41,17 @@ export default function NavBar({ children, hasLoggedIn, initPage }) {
       <Navbar isBordered className="bg-background/10">
         <NavbarContent justify="start">
           <NavbarBrand className="mr-4">
-            <p className="hidden sm:block font-bold text-inherit">ACME</p>
+            <p className="hidden sm:block font-bold text-inherit">CoSpace</p>
           </NavbarBrand>
           <NavbarContent className="hidden sm:flex gap-3">
-            <LinkNavbarItem slug="">beranda</LinkNavbarItem>
-            <LinkNavbarItem slug="fasilitas">fasilitas</LinkNavbarItem>
-            <LinkNavbarItem slug="tentang">tentang kami</LinkNavbarItem>
-            <LinkNavbarItem slug="kontak">kontak</LinkNavbarItem>
+            <LinkNavbarItem id="beranda" slug="">beranda</LinkNavbarItem>
+            <LinkNavbarItem id="fasilitas" slug="fasilitas">fasilitas</LinkNavbarItem>
+            <LinkNavbarItem id="tentang" slug="tentang">tentang kami</LinkNavbarItem>
+            <LinkNavbarItem id="kontak" slug="kontak">kontak</LinkNavbarItem>
           </NavbarContent>
         </NavbarContent>
 
         <NavbarContent as="div" className="items-center" justify="end">
-          <Input
-            classNames={{
-              base: "max-w-full sm:max-w-[10rem] h-10",
-              mainWrapper: "h-full",
-              input: "text-small",
-              inputWrapper:
-                "h-full font-normal text-default-500 bg-default-400/20 dark:bg-default-500/20",
-            }}
-            placeholder="Type to search..."
-            size="sm"
-            type="search"
-          />
           {hasLoggedIn ? (
             <Dropdown placement="bottom-end">
               <DropdownTrigger>
