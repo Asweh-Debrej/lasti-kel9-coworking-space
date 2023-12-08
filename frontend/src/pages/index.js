@@ -1,7 +1,7 @@
+import DefaultLayout from "@layouts/default";
+
 export default function Home() {
   return (
-    <main>
-      <p>kosong</p>
-    </main>
-  )
+    <DefaultLayout initPage={"beranda"}/>
+  );
 }
