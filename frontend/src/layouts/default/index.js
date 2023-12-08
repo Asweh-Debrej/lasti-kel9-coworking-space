@@ -12,7 +12,6 @@ import {
   Avatar,
   Button,
 } from "@nextui-org/react";
-import styles from "./layout.module.css";
 import NextLink from "next/link";
 
 export default function DefaultLayout({ children, hasLoggedIn, initPage }) {
@@ -37,7 +36,7 @@ export default function DefaultLayout({ children, hasLoggedIn, initPage }) {
   }
 
   return (
-    <div className={styles.container}>
+    <div className="flex flex-col min-h-screen">
       <Navbar isBordered className="bg-background/10">
         <NavbarContent justify="start">
           <NavbarBrand className="mr-4">
