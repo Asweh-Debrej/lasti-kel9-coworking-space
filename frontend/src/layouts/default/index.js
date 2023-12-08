@@ -35,7 +35,7 @@ export default function NavBar({ children, hasLoggedIn, initPage }) {
 
   function LinkNavbarItem({ children, ...props }) {
     return (
-      <NavbarItem isActive={currentPage === props.currentPage}>
+      <NavbarItem isActive={currentPage === props.currentPage} className="hover:cursor-pointer">
         <Link
           aria-current={currentPage === props.currentPage ? "page" : ""}
           color={currentPage === props.currentPage ? "secondary" : "foreground"}
