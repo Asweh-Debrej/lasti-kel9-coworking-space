@@ -1,4 +1,3 @@
-import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import {
   Navbar,
@@ -16,32 +15,20 @@ import {
 } from "@nextui-org/react";
 import styles from "./layout.module.css";
 
-import NavbarContext from "@/context/navbar-context";
-import UserContext from "@/context/user-context";
-
 export default function NavBar({ children, hasLoggedIn, initPage }) {
   const router = useRouter();
-  const { currentPage, setCurrentPage } = useContext(NavbarContext);
-  const { user } = useContext(UserContext);
 
-  function handleMenuClick(page) {
-    setCurrentPage(page);
-    if (page === "beranda") {
-      router.push("/");
-      return;
-    }
-    router.push(`/${page}`);
-  }
+  const currentPage = router.query.slug || initPage;
 
   function LinkNavbarItem({ children, ...props }) {
     return (
-      <NavbarItem isActive={currentPage === props.currentPage} className="hover:cursor-pointer">
+      <NavbarItem isActive={currentPage === props.slug}>
         <Link
-          aria-current={currentPage === props.currentPage ? "page" : ""}
-          color={currentPage === props.currentPage ? "secondary" : "foreground"}
-          onClick={() => {
-            handleMenuClick(props.currentPage);
-          }}>
+          aria-current={currentPage === props.slug ? "page" : ""}
+          color={currentPage === props.slug ? "secondary" : "foreground"}
+          href={`/${props.slug}`}
+          key={props.slug}
+          as="a">
           {children}
         </Link>
       </NavbarItem>
@@ -56,10 +43,10 @@ export default function NavBar({ children, hasLoggedIn, initPage }) {
             <p className="hidden sm:block font-bold text-inherit">ACME</p>
           </NavbarBrand>
           <NavbarContent className="hidden sm:flex gap-3">
-            <LinkNavbarItem currentPage="beranda">beranda</LinkNavbarItem>
-            <LinkNavbarItem currentPage="fasilitas">fasilitas</LinkNavbarItem>
-            <LinkNavbarItem currentPage="tentang">tentang kami</LinkNavbarItem>
-            <LinkNavbarItem currentPage="kontak">kontak</LinkNavbarItem>
+            <LinkNavbarItem slug="">beranda</LinkNavbarItem>
+            <LinkNavbarItem slug="fasilitas">fasilitas</LinkNavbarItem>
+            <LinkNavbarItem slug="tentang">tentang kami</LinkNavbarItem>
+            <LinkNavbarItem slug="kontak">kontak</LinkNavbarItem>
           </NavbarContent>
         </NavbarContent>
 
