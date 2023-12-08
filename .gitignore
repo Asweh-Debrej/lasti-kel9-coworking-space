@@ -1,0 +1,6 @@
+# IDE
+.idea
+.vscode
+*.sublime-project
+*.sublime-workspace
+.vs
