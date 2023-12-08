@@ -41,7 +41,6 @@ export default function DefaultLayout({ children, hasLoggedIn, initPage }) {
       <Navbar isBordered className="bg-background/10">
         <NavbarContent justify="start">
           <NavbarBrand className="mr-4">
-            <p className="hidden sm:block font-bold text-inherit">ACME</p>
             <Link
               className="hidden sm:block font-bold text-inherit"
               href="/"
@@ -51,10 +50,6 @@ export default function DefaultLayout({ children, hasLoggedIn, initPage }) {
             </Link>
           </NavbarBrand>
           <NavbarContent className="hidden sm:flex gap-3">
-            <LinkNavbarItem currentPage="beranda">beranda</LinkNavbarItem>
-            <LinkNavbarItem currentPage="fasilitas">fasilitas</LinkNavbarItem>
-            <LinkNavbarItem currentPage="tentang">tentang kami</LinkNavbarItem>
-            <LinkNavbarItem currentPage="kontak">kontak</LinkNavbarItem>
             <LinkNavbarItem id="beranda" slug="">
               beranda
             </LinkNavbarItem>
@@ -98,12 +93,12 @@ export default function DefaultLayout({ children, hasLoggedIn, initPage }) {
           ) : (
             <>
               <NavbarItem>
-                <Button as={Link} color="warning" href="#" variant="flat">
+                <Button as={NextLink} color="warning" href="/login" variant="flat">
                   Log In
                 </Button>
               </NavbarItem>
               <NavbarItem>
-                <Button as={Link} color="primary" href="#" variant="flat">
+                <Button as={NextLink} color="primary" href="/login" variant="flat">
                   Sign Up
                 </Button>
               </NavbarItem>
