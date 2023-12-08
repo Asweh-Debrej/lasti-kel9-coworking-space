@@ -41,13 +41,32 @@ export default function DefaultLayout({ children, hasLoggedIn, initPage }) {
       <Navbar isBordered className="bg-background/10">
         <NavbarContent justify="start">
           <NavbarBrand className="mr-4">
-            <p className="hidden sm:block font-bold text-inherit">CoSpace</p>
+            <p className="hidden sm:block font-bold text-inherit">ACME</p>
+            <Link
+              className="hidden sm:block font-bold text-inherit"
+              href="/"
+              aria-label="CoSpace"
+              as={NextLink}>
+              CoSpace
+            </Link>
           </NavbarBrand>
           <NavbarContent className="hidden sm:flex gap-3">
-            <LinkNavbarItem id="beranda" slug="">beranda</LinkNavbarItem>
-            <LinkNavbarItem id="fasilitas" slug="fasilitas">fasilitas</LinkNavbarItem>
-            <LinkNavbarItem id="tentang" slug="tentang">tentang kami</LinkNavbarItem>
-            <LinkNavbarItem id="kontak" slug="kontak">kontak</LinkNavbarItem>
+            <LinkNavbarItem currentPage="beranda">beranda</LinkNavbarItem>
+            <LinkNavbarItem currentPage="fasilitas">fasilitas</LinkNavbarItem>
+            <LinkNavbarItem currentPage="tentang">tentang kami</LinkNavbarItem>
+            <LinkNavbarItem currentPage="kontak">kontak</LinkNavbarItem>
+            <LinkNavbarItem id="beranda" slug="">
+              beranda
+            </LinkNavbarItem>
+            <LinkNavbarItem id="fasilitas" slug="fasilitas">
+              fasilitas
+            </LinkNavbarItem>
+            <LinkNavbarItem id="tentang" slug="tentang">
+              tentang kami
+            </LinkNavbarItem>
+            <LinkNavbarItem id="kontak" slug="kontak">
+              kontak
+            </LinkNavbarItem>
           </NavbarContent>
         </NavbarContent>
 
@@ -71,7 +90,9 @@ export default function DefaultLayout({ children, hasLoggedIn, initPage }) {
                   <p className="font-semibold">{user.email}</p>
                 </DropdownItem>
                 <DropdownItem key="settings">Settings</DropdownItem>
-                <DropdownItem key="logout" color="danger">Log Out</DropdownItem>
+                <DropdownItem key="logout" color="danger">
+                  Log Out
+                </DropdownItem>
               </DropdownMenu>
             </Dropdown>
           ) : (
