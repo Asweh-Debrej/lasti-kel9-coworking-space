@@ -61,7 +61,6 @@ export default function NavBar({ children, hasLoggedIn, initPage }) {
             }}
             placeholder="Type to search..."
             size="sm"
-            // startContent={<SearchIcon size={18} />}
             type="search"
           />
           {hasLoggedIn ? (
