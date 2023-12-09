@@ -8,9 +8,7 @@ import { useRouter } from "next/router";
 import { useContext } from "react";
 import UserContext from "@/context/user-context";
 
-const imageSource = "https://source.unsplash.com/random"
-
-export default function Login({ children, isRegister = false, imageUrl, ...props }) {
+export default function Login({ children, isRegister = false }) {
   const router = useRouter();
   const { setUser } = useContext(UserContext);
 
@@ -69,7 +67,8 @@ export default function Login({ children, isRegister = false, imageUrl, ...props
     return isValid;
   };
 
-  const handleLogin = () => {
+  const handleLogin = (e) => {
+    e.preventDefault()
     const emailValid = validateEmail();
     const passwordValid = validatePassword();
 
@@ -90,7 +89,8 @@ export default function Login({ children, isRegister = false, imageUrl, ...props
     });
   };
 
-  const handleRegister = () => {
+  const handleRegister = (e) => {
+    e.preventDefault()
     const nameValid = validateName();
     const phoneValid = validatePhone();
     const emailValid = validateEmail();
@@ -139,121 +139,110 @@ export default function Login({ children, isRegister = false, imageUrl, ...props
     <div className="flex min-h-screen relative items-start overflow-hidden">
       <div className="w-screen relative flex-auto grow overflow-hidden h-screen max-w-[50%] shrink hidden md:flex">
         <Image
-          src={imageUrl}
+          src="https://source.unsplash.com/random"
           className="flex-1 object-cover w-full h-full"
           alt="CoSpace"
           priority
           fill={true}
           sizes="100vh"></Image>
       </div>
-      <div className="w-screen flex flex-col items-center justify-center px-[10%] flex-1 grow relative self-stretch gap-5 overflow-y-auto overflow-x-hidden min-w-[600px]">
-        <h1 className="text-4xl font-bold py-6">
-          {isRegistering ? "It's nice to meet you" : "Welcome back!"}
-        </h1>
-        {isRegistering && (
-          <>
-            <Input
-              type="text"
-              label="Name"
-              variant="faded"
-              value={name}
-              isRequired={true}
-              isInvalid={!isNameValid}
-              errorMessage={nameErrorMessage}
-              onBlur={validateName}
-              onChange={(e) => setName(e.target.value)}
-            />
-            <Input
-              type="text"
-              label="Phone"
-              variant="faded"
-              value={phone}
-              isRequired={true}
-              isInvalid={!isPhoneValid}
-              errorMessage={phoneErrorMessage}
-              onBlur={validatePhone}
-              onChange={(e) => setPhone(e.target.value)}
-            />
-          </>
-        )}
-        <Input
-          type="email"
-          label="Email"
-          variant="faded"
-          value={email}
-          isRequired={isRegistering}
-          isInvalid={!isEmailValid}
-          errorMessage={emailErrorMessage}
-          onBlur={validateEmail}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <Input
-          type="password"
-          label="Password"
-          variant="faded"
-          value={password}
-          isRequired={isRegistering}
-          isInvalid={!isPasswordValid}
-          errorMessage={passwordErrorMessage}
-          onBlur={validatePassword}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <p>
-            <span className={`text-red-500 text-sm ${!isFailed ? "hidden" : "visible"}`}>{errorMessage}</span>
-        </p>
-        <div className="flex flex-col pt-6 items-center gap-[20px] relative self-stretch w-full flex-[0_0_auto]">
-          {!isRegistering ? (
+      <form className="w-screen flex flex-col items-center justify-center px-[10%] flex-1 grow relative self-stretch overflow-y-auto overflow-x-hidden min-w-[600px] gap-5" onSubmit={(isRegistering ? handleRegister : handleLogin)}>
+          <h1 className="text-4xl font-bold py-6">
+            {isRegistering ? "It's nice to meet you" : "Welcome back!"}
+          </h1>
+          {isRegistering && (
             <>
-              <Link
-                href="#"
-                color="error"
-                className="max-w-full text-tiny"
-                underline="hover"
-                as={NextLink}>
-                Forgot password?
-              </Link>
-              <Button
-                color="primary"
-                onClick={handleLogin}
-                isLoading={isLoading}
-                className="w-full text-medium">
-                Login
-              </Button>
-              <button
-                className="max-w-full text-blue-600 hover:underline hover:text-blue-500"
-                onClick={handleSetRegister}>
-                Register
-              </button>
-            </>
-          ) : (
-            <>
-              <Button
-                color="primary"
-                onClick={handleRegister}
-                isLoading={isLoading}
-                className="w-full text-medium">
-                Register
-              </Button>
-              <button
-                className="max-w-full text-blue-600 hover:underline hover:text-blue-500"
-                onClick={handleSetLogin}>
-                use existing account instead
-              </button>
+              <Input
+                type="text"
+                label="Name"
+                variant="faded"
+                value={name}
+                isRequired={true}
+                isInvalid={!isNameValid}
+                errorMessage={nameErrorMessage}
+                onBlur={validateName}
+                onChange={(e) => setName(e.target.value)}
+              />
+              <Input
+                type="text"
+                label="Phone"
+                variant="faded"
+                value={phone}
+                isRequired={true}
+                isInvalid={!isPhoneValid}
+                errorMessage={phoneErrorMessage}
+                onBlur={validatePhone}
+                onChange={(e) => setPhone(e.target.value)}
+              />
             </>
           )}
-        </div>
-      </div>
+          <Input
+            type="email"
+            label="Email"
+            variant="faded"
+            value={email}
+            isRequired={isRegistering}
+            isInvalid={!isEmailValid}
+            errorMessage={emailErrorMessage}
+            onBlur={validateEmail}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <Input
+            type="password"
+            label="Password"
+            variant="faded"
+            value={password}
+            isRequired={isRegistering}
+            isInvalid={!isPasswordValid}
+            errorMessage={passwordErrorMessage}
+            onBlur={validatePassword}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <p>
+              <span className={`text-red-500 text-sm ${!isFailed ? "hidden" : "visible"}`}>{errorMessage}</span>
+          </p>
+          <div className="flex flex-col pt-6 items-center gap-[20px] relative self-stretch w-full flex-[0_0_auto]">
+            {!isRegistering ? (
+              <>
+                <Link
+                  href="#"
+                  color="error"
+                  className="max-w-full text-tiny"
+                  underline="hover"
+                  as={NextLink}>
+                  Forgot password?
+                </Link>
+                <Button
+                  color="primary"
+                  type="submit"
+                  isLoading={isLoading}
+                  className="w-full text-medium">
+                  Login
+                </Button>
+                <button
+                  className="max-w-full text-blue-600 hover:underline hover:text-blue-500"
+                  onClick={handleSetRegister}>
+                  Register
+                </button>
+              </>
+            ) : (
+              <>
+                <Button
+                  color="primary"
+                  type="submit"
+                  isLoading={isLoading}
+                  className="w-full text-medium">
+                  Register
+                </Button>
+                <button
+                  className="max-w-full text-blue-600 hover:underline hover:text-blue-500"
+                  onClick={handleSetLogin}>
+                  use existing account instead
+                </button>
+              </>
+            )}
+          </div>
+      </form>
     </div>
   );
-}
-
-export const getStaticProps = async () => {
-  const respones = await fetch(imageSource);
-  const imageUrl = respones.url;
-
-  return {
-    props: {
-      imageUrl,
-    },
-  };
 }
