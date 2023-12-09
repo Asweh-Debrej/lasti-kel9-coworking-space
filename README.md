@@ -49,4 +49,5 @@ Proses Bisnis yang Diimplementasikan adalah proses bisnis Penerimaan Pelanggan, 
 Tes
 
 ## Petunjuk Penggunaan (Penerimaan Pelanggan)
-Tes
+Isi email dan password untuk login
+Jika belum terdaftar, tekan tombol register
