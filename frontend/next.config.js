@@ -2,16 +2,22 @@
 const API_HOST = 'http://localhost:5001'
 
 const nextConfig = {
+  // output: 'export', // use for building statics
   reactStrictMode: true,
   images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'source.unsplash.com',
-        port: '',
-        pathname: '/random',
-      },
-    ],
+    unoptimized: true
+  },
+  exportPathMap: async function (
+    defaultPathMap,
+    { dev, dir, outDir, distDir, buildId }
+  ) {
+    return {
+      '/': { page: '/' },
+      '/fasilitas/index': { page: '/fasilitas' },
+      '/kontak/index': { page: '/kontak' },
+      '/login/index': {page: '/login'},
+      '/tentang/index': {page: '/tentang'}
+    }
   },
   async rewrites() {
 		return [

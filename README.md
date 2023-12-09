@@ -46,7 +46,8 @@ Proses Bisnis yang Diimplementasikan adalah proses bisnis Penerimaan Pelanggan, 
 
 
 ## Link Deployment
-Tes
+<a href="http://lesti-1-9-23.azurewebsites.net/">Klik di sini</a>
 
 ## Petunjuk Penggunaan (Penerimaan Pelanggan)
-Tes
+Isi email dan password untuk login
+Jika belum terdaftar, tekan tombol register

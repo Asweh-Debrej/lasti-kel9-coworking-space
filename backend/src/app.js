@@ -19,15 +19,9 @@ const start = async () => {
 
     await db.connect(process.env.MONGO_URI)
 
-    app.get('/', (req, res) => {
-      res.send();
-    });
-
     app.use("/api", memberRoutes)
 
-    app.use("*", (req, res) => {
-      res.status(404).send();
-    });
+    app.use('/',express.static(__dirname+'/public'))
 
     app.listen(port, () => {
       console.log(`Server is running on port ${port}`);
