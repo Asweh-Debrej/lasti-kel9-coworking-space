@@ -20,7 +20,7 @@
       <a href="#proses-bisnis-yang-diimplemenasi">Proses Bisnis yang Diimplementasi</a>
     </li>
     <li>
-      <a href="#link-deployment">Database</a>
+      <a href="#link-deployment">Link Deployment</a>
     </li>
     <li>
       <a href="#petunjuk-penggunaan-yang ">Deployment</a>
