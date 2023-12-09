@@ -1,15 +1,21 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // output: 'export',
   reactStrictMode: true,
   images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'source.unsplash.com',
-        port: '',
-        pathname: '/random',
-      },
-    ],
+    unoptimized: true
+  },
+  exportPathMap: async function (
+    defaultPathMap,
+    { dev, dir, outDir, distDir, buildId }
+  ) {
+    return {
+      '/': { page: '/' },
+      '/fasilitas': { page: '/fasilitas' },
+      '/kontak': { page: '/kontak' },
+      '/login': {page: '/login'},
+      '/tentang': {page: '/tentang'}
+    }
   },
 }
 
