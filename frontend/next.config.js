@@ -16,7 +16,8 @@ const nextConfig = {
       '/fasilitas/index': { page: '/fasilitas' },
       '/kontak/index': { page: '/kontak' },
       '/login/index': {page: '/login'},
-      '/tentang/index': {page: '/tentang'}
+      '/tentang/index': {page: '/tentang'},
+      '/profil/index': {page: '/profil'},
     }
   },
   // async rewrites() {

@@ -16,7 +16,7 @@ export const UserProvider = ({ children }) => {
       setUser(null);
       return;
     }
-    setUser({ name: user.name, email: user.email });
+    setUser({ name: user.name, email: user.email, phone: user.phone });
   };
 
   return (

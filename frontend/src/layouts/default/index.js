@@ -107,7 +107,7 @@ export default function DefaultLayout({ children, initPage }) {
                   <p className="font-semibold">Signed in as</p>
                   <p className="font-semibold">{user.email}</p>
                 </DropdownItem>
-                <DropdownItem key="settings">Profile</DropdownItem>
+                <DropdownItem key="settings" as={NextLink} href='/profil'>Profile</DropdownItem>
                 <DropdownItem key="logout" color="danger" onClick={handleLogout}>
                   Log Out
                 </DropdownItem>
