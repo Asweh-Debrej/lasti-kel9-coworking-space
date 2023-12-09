@@ -41,6 +41,7 @@ export default function DefaultLayout({ children, initPage }) {
   function handleLogout() {
     setUser(null);
     localStorage.removeItem("token");
+    if (router.pathname === '/profil') router.back()
   }
 
   function LinkNavbarItem({ children, ...props }) {
