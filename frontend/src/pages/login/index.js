@@ -8,7 +8,9 @@ import { useRouter } from "next/router";
 import { useContext } from "react";
 import UserContext from "@/context/user-context";
 
-export default function Login({ children, isRegister = false, ...props }) {
+const imageSource = "https://source.unsplash.com/random"
+
+export default function Login({ children, isRegister = false, imageUrl, ...props }) {
   const router = useRouter();
   const { setUser } = useContext(UserContext);
 
@@ -134,17 +136,17 @@ export default function Login({ children, isRegister = false, ...props }) {
   }
 
   return (
-    <div className="flex min-h-screen relative items-start overflow-clip">
-      <div className="w-screen relative flex-1 grow overflow-hidden min-w-[300px] h-screen max-w-[50%]">
+    <div className="flex min-h-screen relative items-start overflow-hidden">
+      <div className="w-screen relative flex-auto grow overflow-hidden h-screen max-w-[50%] shrink hidden md:flex">
         <Image
-          src="https://source.unsplash.com/random"
+          src={imageUrl}
           className="flex-1 object-cover w-full h-full"
           alt="CoSpace"
           priority
           fill={true}
-          sizes="100vw 100vh"></Image>
+          sizes="100vh"></Image>
       </div>
-      <div className="w-screen flex flex-col items-center justify-center px-[64px] flex-1 grow relative self-stretch gap-5 overflow-y-scroll overflow-x-hidden max-w-[50%]">
+      <div className="w-screen flex flex-col items-center justify-center px-[10%] flex-1 grow relative self-stretch gap-5 overflow-y-auto overflow-x-hidden min-w-[600px]">
         <h1 className="text-4xl font-bold py-6">
           {isRegistering ? "It's nice to meet you" : "Welcome back!"}
         </h1>
@@ -243,4 +245,15 @@ export default function Login({ children, isRegister = false, ...props }) {
       </div>
     </div>
   );
+}
+
+export const getStaticProps = async () => {
+  const respones = await fetch(imageSource);
+  const imageUrl = respones.url;
+
+  return {
+    props: {
+      imageUrl,
+    },
+  };
 }
