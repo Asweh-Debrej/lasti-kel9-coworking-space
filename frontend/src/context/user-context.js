@@ -2,7 +2,7 @@ import { createContext, useState } from 'react';
 
 const UserContext = createContext(
   {
-    user: null,
+    user: null, // { name, email }
     setUser: (user) => {},
   }
 );
@@ -10,11 +10,20 @@ const UserContext = createContext(
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
+  const handleSetUser = (user) => {
+    if (!user) {
+      // localStorage.removeItem("token");
+      setUser(null);
+      return;
+    }
+    setUser({ name: user.name, email: user.email });
+  };
+
   return (
     <UserContext.Provider
       value={{
         user,
-        setUser,
+        setUser: handleSetUser,
       }}
     >
       {children}

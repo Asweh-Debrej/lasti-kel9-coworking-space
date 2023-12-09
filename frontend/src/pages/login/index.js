@@ -1,13 +1,16 @@
 import { Button, Input, Link } from "@nextui-org/react";
-import React, { Fragment, useEffect, useState } from "react";
+import React, { useState } from "react";
 import NextLink from "next/link";
 import Image from "next/image";
 import validator from "validator";
-import { login } from "@/services/apiService";
+import { login, register } from "@/services/apiService";
 import { useRouter } from "next/router";
+import { useContext } from "react";
+import UserContext from "@/context/user-context";
 
 export default function Login({ children, isRegister = false, ...props }) {
   const router = useRouter();
+  const { setUser } = useContext(UserContext);
 
   const [name, setName] = useState("");
   const [isNameValid, setIsNameValid] = useState(true);
@@ -26,7 +29,7 @@ export default function Login({ children, isRegister = false, ...props }) {
   const [passwordErrorMessage, setPasswordErrorMessage] = useState("");
 
   const [isLoading, setIsLoading] = useState(false);
-  const [register, setRegister] = useState(isRegister);
+  const [isRegistering, setIsRegistering] = useState(isRegister);
   const [errorMessage, setErrorMessage] = useState("Error!");
   const [isFailed, setIsFailed] = useState(false);
 
@@ -73,15 +76,17 @@ export default function Login({ children, isRegister = false, ...props }) {
     if (!isLoginValid) {return}
 
     setIsLoading(true);
-    try {
-      login(email, password);
+
+    login(email, password).then((res) => {
+      console.log(res);
+      setUser(res);
       router.push("/"); // Redirect to home page
-    } catch (e) {
+    }).catch((err) => {
       setIsFailed(true);
-      setErrorMessage(e.message);
-    } finally {
+      setErrorMessage(err.message);
+    }).finally(() => {
       setIsLoading(false);
-    }
+    });
   };
 
   const handleRegister = () => {
@@ -95,15 +100,17 @@ export default function Login({ children, isRegister = false, ...props }) {
     if (!isRegisterValid) {return}
 
     setIsLoading(true);
-    try {
-      register(name, email, password, phone);
+
+    register(name, email, password, phone).then((res) => {
+      console.log(res);
+      setUser(res);
       router.push("/"); // Redirect to home page
-    } catch (e) {
+    }).catch((err) => {
       setIsFailed(true);
-      setErrorMessage(e.message);
-    } finally {
+      setErrorMessage(err.message);
+    }).finally(() => {
       setIsLoading(false);
-    }
+    });
   }
 
   const handleSetLogin = () => {
@@ -112,7 +119,7 @@ export default function Login({ children, isRegister = false, ...props }) {
     setEmailErrorMessage("");
     setPasswordErrorMessage("");
 
-    setRegister(false);
+    setIsRegistering(false);
   }
 
   const handleSetRegister = () => {
@@ -125,11 +132,11 @@ export default function Login({ children, isRegister = false, ...props }) {
     setEmailErrorMessage("");
     setPasswordErrorMessage("");
 
-    setRegister(true);
+    setIsRegistering(true);
   }
 
   return (
-    <div className="flex min-h-screen relative items-start overflow-hidden">
+    <div className="flex min-h-screen relative items-start overflow-clip">
       <div className="w-screen relative flex-1 grow overflow-hidden min-w-[300px] h-screen max-w-[50%]">
         <Image
           src="https://source.unsplash.com/random"
@@ -139,11 +146,11 @@ export default function Login({ children, isRegister = false, ...props }) {
           fill={true}
           sizes="100vw 100vh"></Image>
       </div>
-      <div className="w-screen flex flex-col items-center justify-center px-[64px] flex-1 grow relative self-stretch gap-5 overflow-hidden max-w-[50%]">
+      <div className="w-screen flex flex-col items-center justify-center px-[64px] flex-1 grow relative self-stretch gap-5 overflow-y-scroll overflow-x-hidden max-w-[50%]">
         <h1 className="text-4xl font-bold py-6">
-          {register ? "It's nice to meet you" : "Welcome back!"}
+          {isRegistering ? "It's nice to meet you" : "Welcome back!"}
         </h1>
-        {register && (
+        {isRegistering && (
           <>
             <Input
               type="text"
@@ -174,7 +181,7 @@ export default function Login({ children, isRegister = false, ...props }) {
           label="Email"
           variant="faded"
           value={email}
-          isRequired={register}
+          isRequired={isRegistering}
           isInvalid={!isEmailValid}
           errorMessage={emailErrorMessage}
           onBlur={validateEmail}
@@ -185,7 +192,7 @@ export default function Login({ children, isRegister = false, ...props }) {
           label="Password"
           variant="faded"
           value={password}
-          isRequired={register}
+          isRequired={isRegistering}
           isInvalid={!isPasswordValid}
           errorMessage={passwordErrorMessage}
           onBlur={validatePassword}
@@ -195,7 +202,7 @@ export default function Login({ children, isRegister = false, ...props }) {
             <span className={`text-red-500 text-sm ${!isFailed ? "hidden" : "visible"}`}>{errorMessage}</span>
         </p>
         <div className="flex flex-col pt-6 items-center gap-[20px] relative self-stretch w-full flex-[0_0_auto]">
-          {!register ? (
+          {!isRegistering ? (
             <>
               <Link
                 href="#"

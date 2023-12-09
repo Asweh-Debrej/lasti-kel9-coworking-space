@@ -1,4 +1,6 @@
 /** @type {import('next').NextConfig} */
+const API_HOST = 'http://localhost:5001'
+
 const nextConfig = {
   reactStrictMode: true,
   images: {
@@ -11,6 +13,14 @@ const nextConfig = {
       },
     ],
   },
+  async rewrites() {
+		return [
+			{
+				source: '/api/:path*',
+				destination: `${API_HOST}/api/:path*`,
+			},
+		]
+	},
 }
 
 module.exports = nextConfig

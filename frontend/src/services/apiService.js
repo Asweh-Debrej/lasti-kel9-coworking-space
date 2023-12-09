@@ -1,27 +1,41 @@
-import axios from "axios";
-
-const api = axios.create({
-  baseURL: "http://localhost:3000",
-  withCredentials: true,
-});
-
 export const login = async (email, password) => {
-  try {
-    const { data } = await api.post("/login", { email, password });
-    localStorage.setItem("token", data.token);
-    return data;
-  } catch (e) {
-    console.error(e);
-    throw new Error(e.response.data.message);
-  }
+  const response = await fetch(`/api/login`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({email, password}),
+  });
+  console.log(response);
+  const data = await response.json();
+  if (!response.ok) throw new Error(data.message);
+  localStorage.setItem('token', data.token);
+  return data;
 }
 
 export const register = async (name, email, password, phone) => {
-  try {
-    const { data } = await api.post("/register", { name, email, password, phone });
-    return data;
-  } catch (e) {
-    console.error(e);
-    throw new Error(e.response.data.message);
-  }
+  const response = await fetch(`/api/register`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({name, email, password, phone}),
+  });
+  const data = await response.json();
+  if (!response.ok) throw new Error(data.message);
+  localStorage.setItem('token', data.token);
+  return data;
+}
+
+export const getProfile = async (token) => {
+  const response = await fetch(`/api/profile`, {
+    method: "GET",
+    headers: {
+      "Authorization": `Bearer ${token}`
+    },
+  });
+  const data = await response.json();
+  console.log(data);
+  if (!response.ok) throw new Error(data.message);
+  return data;
 }

@@ -13,11 +13,32 @@ import {
   Button,
 } from "@nextui-org/react";
 import NextLink from "next/link";
+import { useContext, useEffect } from "react";
+import UserContext from "@/context/user-context";
+import { getProfile } from "@/services/apiService";
 
-export default function DefaultLayout({ children, hasLoggedIn, initPage }) {
+export default function DefaultLayout({ children, initPage }) {
   const router = useRouter();
+  const { user, setUser } = useContext(UserContext);
 
   const currentPage = router.query.slug || initPage;
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token !== "undefined") {
+      console.log("token", token);
+
+      getProfile(token)
+        .then((res) => {
+          setUser(res);
+        })
+        .catch((err) => {
+          setUser(null);
+        });
+    } else {
+      setUser(null);
+    }
+  }, [router.asPath]);
 
   function LinkNavbarItem({ children, ...props }) {
     return (
@@ -65,7 +86,7 @@ export default function DefaultLayout({ children, hasLoggedIn, initPage }) {
         </NavbarContent>
 
         <NavbarContent as="div" className="items-center" justify="end">
-          {hasLoggedIn ? (
+          {user ? (
             <Dropdown placement="bottom-end">
               <DropdownTrigger>
                 <Avatar
@@ -79,11 +100,11 @@ export default function DefaultLayout({ children, hasLoggedIn, initPage }) {
                 />
               </DropdownTrigger>
               <DropdownMenu aria-label="Profile Actions" variant="flat">
-                <DropdownItem key="profile" className="h-14 gap-2">
+                <DropdownItem key="profile" className="h-14 gap-2" textValue="profile">
                   <p className="font-semibold">Signed in as</p>
                   <p className="font-semibold">{user.email}</p>
                 </DropdownItem>
-                <DropdownItem key="settings">Settings</DropdownItem>
+                <DropdownItem key="settings">Profile</DropdownItem>
                 <DropdownItem key="logout" color="danger">
                   Log Out
                 </DropdownItem>
@@ -92,12 +113,20 @@ export default function DefaultLayout({ children, hasLoggedIn, initPage }) {
           ) : (
             <>
               <NavbarItem>
-                <Button as={NextLink} color="warning" href="/login" variant="flat">
+                <Button
+                  as={NextLink}
+                  color="warning"
+                  href="/login"
+                  variant="flat">
                   Log In
                 </Button>
               </NavbarItem>
               <NavbarItem>
-                <Button as={NextLink} color="primary" href="/login" variant="flat">
+                <Button
+                  as={NextLink}
+                  color="primary"
+                  href="/login"
+                  variant="flat">
                   Sign Up
                 </Button>
               </NavbarItem>
