@@ -78,7 +78,6 @@ export default function Login({ children, isRegister = false, ...props }) {
     setIsLoading(true);
 
     login(email, password).then((res) => {
-      console.log(res);
       setUser(res);
       router.push("/"); // Redirect to home page
     }).catch((err) => {
@@ -102,7 +101,6 @@ export default function Login({ children, isRegister = false, ...props }) {
     setIsLoading(true);
 
     register(name, email, password, phone).then((res) => {
-      console.log(res);
       setUser(res);
       router.push("/"); // Redirect to home page
     }).catch((err) => {

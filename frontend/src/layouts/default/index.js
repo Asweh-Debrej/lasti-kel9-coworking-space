@@ -26,8 +26,6 @@ export default function DefaultLayout({ children, initPage }) {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token !== "undefined") {
-      console.log("token", token);
-
       getProfile(token)
         .then((res) => {
           setUser(res);
@@ -39,6 +37,11 @@ export default function DefaultLayout({ children, initPage }) {
       setUser(null);
     }
   }, [router.asPath]);
+
+  function handleLogout() {
+    setUser(null);
+    localStorage.removeItem("token");
+  }
 
   function LinkNavbarItem({ children, ...props }) {
     return (
@@ -105,7 +108,7 @@ export default function DefaultLayout({ children, initPage }) {
                   <p className="font-semibold">{user.email}</p>
                 </DropdownItem>
                 <DropdownItem key="settings">Profile</DropdownItem>
-                <DropdownItem key="logout" color="danger">
+                <DropdownItem key="logout" color="danger" onClick={handleLogout}>
                   Log Out
                 </DropdownItem>
               </DropdownMenu>
