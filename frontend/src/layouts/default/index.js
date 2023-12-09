@@ -36,6 +36,7 @@ export default function DefaultLayout({ children, initPage }) {
     } else {
       setUser(null);
     }
+    if (!user && router.pathname === '/profil') router.back()
   }, [router.asPath]);
 
   function handleLogout() {
