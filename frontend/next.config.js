@@ -1,8 +1,8 @@
 /** @type {import('next').NextConfig} */
-const API_HOST = 'http://localhost:5001'
+// const API_HOST = 'http://localhost:5001'
 
 const nextConfig = {
-  // output: 'export', // use for building statics
+  output: 'export', // use for building statics
   reactStrictMode: true,
   images: {
     unoptimized: true
@@ -19,14 +19,14 @@ const nextConfig = {
       '/tentang/index': {page: '/tentang'}
     }
   },
-  async rewrites() {
-		return [
-			{
-				source: '/api/:path*',
-				destination: `${API_HOST}/api/:path*`,
-			},
-		]
-	},
+  // async rewrites() {
+	// 	return [
+	// 		{
+	// 			source: '/api/:path*',
+	// 			destination: `${API_HOST}/api/:path*`,
+	// 		},
+	// 	]
+	// },
 }
 
 module.exports = nextConfig
